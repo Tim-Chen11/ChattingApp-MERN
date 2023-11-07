@@ -10,6 +10,7 @@ import RegisterPage from "./authPages/RegisterPage/RegisterPage";
 import Dashboard from "./Dashboard/Dashboard";
 
 import "./App.css";
+import AlertNotification from "./shared/components/AlertNotification";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           </Route>
         </Routes>
       </Router>
+
+      <AlertNotification />
     </>
   );
 }
