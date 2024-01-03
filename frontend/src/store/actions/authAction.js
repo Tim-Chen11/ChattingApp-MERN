@@ -24,6 +24,7 @@ const setUserDetails = (userDetails) => {
 const login = (userDetails, history) => {
   return async (dispatch) => {
     const response = await api.login(userDetails);
+    console.log(response);
     if (response.error) {
       //show error message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
@@ -40,6 +41,7 @@ const login = (userDetails, history) => {
 const register = (userDetails, history) => {
   return async (dispatch) => {
     const response = await api.register(userDetails);
+    console.log(response);
     if (response.error) {
       //show error message in alert
       dispatch(openAlertMessage(response?.exception?.response?.data));
