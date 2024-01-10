@@ -23,16 +23,28 @@ const removeConnectedUser = (socketId) => {
 };
 
 const getActiveConnections = (userId) => {
-    const activeConnections = [];
-  
-    connectedUsers.forEach(function (value, key) {
-      if (value.userId === userId) {
-        activeConnections.push(key);
-      }
-    });
-  
-    return activeConnections;
-  };
+  const activeConnections = [];
+
+  connectedUsers.forEach(function (value, key) {
+    if (value.userId === userId) {
+      activeConnections.push(key);
+    }
+  });
+
+  return activeConnections;
+};
+
+const getOnlinerUsers = () => {
+  const onlineUsers = [];
+
+  connectedUsers.forEach((value, key) => {
+    onlineUsers.push({ socketId: key, userId: value.userId });
+  });
+
+  return onlineUsers;
+};
+
+
 
 module.exports = {
   addNewConnectedUser,
@@ -40,4 +52,5 @@ module.exports = {
   getActiveConnections,
   setSocketServerInstance,
   getSocketServerInstance,
+  getOnlinerUsers
 };
