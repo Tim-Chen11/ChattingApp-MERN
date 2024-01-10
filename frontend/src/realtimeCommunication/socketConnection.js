@@ -1,11 +1,13 @@
 import io from "socket.io-client";
-import store from "../store/store";
 import {
   setPendingFriendsInvitations,
   setFriends,
   setOnlineUsers,
 } from "../store/actions/friendsActions";
+import store from "../store/store";
 import { updateDirectChatHistoryIfActive } from "../shared/utils/chat";
+import * as roomHandler from "./roomHandler";
+import * as webRTCHandler from "./webRTCHandler";
 
 let socket = null;
 
@@ -19,13 +21,12 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("connect", () => {
-    console.log("frontedn succesfully connected with socket.io server");
+    console.log("succesfully connected with socket.io server");
     console.log(socket.id);
   });
 
   socket.on("friends-invitations", (data) => {
     const { pendingInvitations } = data;
-
     store.dispatch(setPendingFriendsInvitations(pendingInvitations));
   });
 
@@ -40,9 +41,16 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("direct-chat-history", (data) => {
-    console.log("direct chat history came from server");
     console.log(data);
     updateDirectChatHistoryIfActive(data);
+  });
+
+  socket.on("room-create", (data) => {
+    roomHandler.newRoomCreated(data);
+  });
+
+  socket.on("active-rooms", (data) => {
+    roomHandler.updateActiveRooms(data);
   });
 };
 
@@ -52,6 +60,17 @@ export const sendDirectMessage = (data) => {
 };
 
 export const getDirectChatHistory = (data) => {
-  console.log("getDirectChatHistory");
   socket.emit("direct-chat-history", data);
+};
+
+export const createNewRoom = () => {
+  socket.emit("room-create");
+};
+
+export const joinRoom = (data) => {
+  socket.emit("room-join", data);
+};
+
+export const leaveRoom = (data) => {
+  socket.emit("room-leave", data);
 };

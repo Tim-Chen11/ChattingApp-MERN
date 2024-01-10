@@ -28,4 +28,5 @@ const mapStoreStateToProps = ({ chat }) => {
     ...chat,
   };
 };
+
 export default connect(mapStoreStateToProps)(Messenger);

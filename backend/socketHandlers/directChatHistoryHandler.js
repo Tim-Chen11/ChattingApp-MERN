@@ -10,7 +10,7 @@ const directChatHistoryHandler = async (socket, data) => {
 
     const conversation = await Conversation.findOne({
       participants: { $all: [userId, receiverUserId] },
-      type: "DIRECT",  //when click the avartar the message will not spontaneously pop out, plz delete this row to fix it 
+      // type: "DIRECT",  //when click the avartar the message will not spontaneously pop out, plz delete this row to fix it 
     });
 
     console.log(conversation.type)
